@@ -1,7 +1,15 @@
 const Add = (s) => {
   if (s == "") return 0;
 
-  let delimiter = /[\n,]+/;
+  let delimiter;
+  if (/^[\/]{2}.\n/.test(s)) {
+    delimiter = "[\\n," + s[2] + "]+";
+    s = s.slice(4);
+    delimiter = RegExp(delimiter);
+    //return delimiter;
+  } else {
+    delimiter = /[\n,]+/;
+  }
   let sum = s
     .split(delimiter)
     .map((el) => {
