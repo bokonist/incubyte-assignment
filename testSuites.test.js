@@ -59,3 +59,12 @@ describe("TEST set 2 - comma and newline separated numbers", () => {
     expect(Add("1\n2,3\n4,50")).toBe(60);
   });
 });
+
+describe("TEST set 3 - new additional delimiter", () => {
+  it("two numbers,custom separated", () => {
+    expect(Add("//;\n25;25")).toBe(50);
+  });
+  it("multple numbers, multiple missing, newline, comma and custom separated", () => {
+    expect(Add("//;\n25;25,25\n25\n\n;;;,1,2,3")).toBe(106);
+  });
+});
