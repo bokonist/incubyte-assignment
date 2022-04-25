@@ -1,7 +1,7 @@
 const Add = (s) => {
   if (s == "") return 0;
 
-  let delimiter = ",";
+  let delimiter = /[\n,]+/;
   let sum = s
     .split(delimiter)
     .map((el) => {
