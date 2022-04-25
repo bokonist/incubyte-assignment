@@ -68,3 +68,25 @@ describe("TEST set 3 - new additional delimiter", () => {
     expect(Add("//;\n25;25,25\n25\n\n;;;,1,2,3")).toBe(106);
   });
 });
+describe("TEST set 4 - negative and non-numbers", () => {
+  it("one negative number", () => {
+    expect(() => {
+      Add("-1");
+    }).toThrow("negatives not allowed: -1");
+  });
+  it("multiple delimeted negative numbers", () => {
+    expect(() => {
+      Add("//;\n-25;25,25\n25\n\n;;;,-1,-2,3");
+    }).toThrow("negatives not allowed: -25,-1,-2");
+  });
+  it("one invalid number", () => {
+    expect(() => {
+      Add("abc");
+    }).toThrow("Invalid numbers passed: abc");
+  });
+  it("multiple delimeted non-numbers", () => {
+    expect(() => {
+      Add("//;\nabc;25,25\n25\n\n;;;,a,b,c");
+    }).toThrow("Invalid numbers passed: abc,a,b,c");
+  });
+});
