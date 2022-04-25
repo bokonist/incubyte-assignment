@@ -10,10 +10,19 @@ const Add = (s) => {
   } else {
     delimiter = /[\n,]+/;
   }
-  let sum = s
-    .split(delimiter)
+  let arr = s.split(delimiter);
+  let sum = arr
     .map((el) => {
       if (el == "") return 0;
+      else if (isNaN(el))
+        throw new Error(
+          "Invalid numbers passed: " + arr.filter((el) => isNaN(el)).join(",")
+        );
+      else if (el[0] == "-")
+        throw new Error(
+          "negatives not allowed: " +
+            arr.filter((el) => Number(el) < 0).join(",")
+        );
       else return Number(el);
     })
     .reduce((el, acc) => {
