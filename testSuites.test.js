@@ -1,4 +1,4 @@
-const Add = require("./index");
+const Add = require('./index');
 
 describe("TEST set 1 - simple comma separated numbers, empty strings", () => {
   it("empty string", () => {
@@ -73,6 +73,13 @@ describe("TEST set 4 - negative and non-numbers", () => {
     expect(() => {
       Add("-1");
     }).toThrow("negatives not allowed: -1");
+    // expect(Add("-1")).toBe(-1);
+  });
+  it("even number of negatives", () => {
+    expect(Add("-1,-2")).toBe(-3);
+  });
+  it("odd number of negative", () => {
+    expect(() => Add("-1,-2,-3")).toThrow("negatives not allowed: -1,-2,-3");
   });
   it("multiple delimeted negative numbers", () => {
     expect(() => {
@@ -88,5 +95,13 @@ describe("TEST set 4 - negative and non-numbers", () => {
     expect(() => {
       Add("//;\nabc;25,25\n25\n\n;;;,a,b,c");
     }).toThrow("Invalid numbers passed: abc,a,b,c");
+  });
+});
+describe("TEST SET 5 - ignore numbers", () => {
+  it("ignore numbers gt than thousand", () => {
+    expect(Add("1,2,1001")).toBe(3);
+  });
+  it("include 1000", () => {
+    expect(Add("1,2,1000")).toBe(1003);
   });
 });
