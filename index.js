@@ -7,6 +7,10 @@ const Add = (s) => {
   let paramString = s;
   let delimiterExp = /[\n,]+/;
   let customDelimiter;
+  let sum = 0;
+  const negativeArr = [];
+  const invalidNums = [];
+
   if (/^[/]{2}.\n/.test(s)) {
     customDelimiter = s.charAt(2);
     delimiter = `[\\n,${customDelimiter}]+`;
@@ -15,16 +19,11 @@ const Add = (s) => {
   }
 
   const arr = paramString.split(delimiterExp);
-  let sum = 0;
-  const negativeArr = [];
-  arr.forEach((element, index) => {
+  arr.forEach((element) => {
     let num = Number(element);
     if (Number.isNaN(num)) {
-      throw new Error(
-        `Invalid numbers passed: ${arr
-          .filter((el) => Number.isNaN(Number(el)))
-          .join(",")}`
-      );
+      invalidNums.push(element);
+      num = 0;
     }
     if (num < 0) {
       negativeArr.push(num);
@@ -34,8 +33,12 @@ const Add = (s) => {
     sum += num;
   });
   const isNegativeCountOdd = negativeArr.length % 2 === 1;
+  const hasInvalidNumbers = invalidNums.length > 0;
   if (isNegativeCountOdd) {
     throw new Error(`negatives not allowed: ${negativeArr.join(",")}`);
+  }
+  if (hasInvalidNumbers) {
+    throw new Error(`Invalid numbers passed: ${invalidNums.join(",")}`);
   }
   return sum;
 };
