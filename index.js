@@ -15,7 +15,7 @@ const Add = (s) => {
   }
 
   const arr = paramString.split(delimiterExp);
-
+  let sum = 0;
   const negativeArr = [];
   arr.forEach((element, index) => {
     let num = Number(element);
@@ -31,13 +31,12 @@ const Add = (s) => {
     } else if (num > 1000) {
       num = 0;
     }
-    arr[index] = num;
+    sum += num;
   });
   const isNegativeCountOdd = negativeArr.length % 2 === 1;
   if (isNegativeCountOdd) {
     throw new Error(`negatives not allowed: ${negativeArr.join(",")}`);
   }
-  const sum = arr.reduce((el, tempSum) => tempSum + el, 0);
   return sum;
 };
 module.exports = Add;
